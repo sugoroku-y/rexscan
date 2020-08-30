@@ -1,0 +1,41 @@
+{
+  "name": "rexscan",
+  "version": "1.0.0",
+  "description": "scan text with RegExp.",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc --build src/tsconfig.json",
+    "test": "jest --coverage"
+  },
+  "keywords": [],
+  "author": {
+    "name": "YEBISUYA Sugoroku",
+    "email": "yebisuya@gmail.com",
+    "url": "https://qiita.com/sugoroku_y"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^26.0.10",
+    "@types/node": "^14.6.1",
+    "jest": "^26.4.2",
+    "ts-jest": "^26.3.0",
+    "typescript": "^4.0.2"
+  },
+  "jest": {
+    "testMatch": [
+      "**/src/*.test.ts"
+    ],
+    "transform": {
+      "\\.ts$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "src/tsconfig.json"
+      }
+    },
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/index.ts"
+    ]
+  }
+}
