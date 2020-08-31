@@ -2,6 +2,7 @@
   "name": "rexscan",
   "version": "1.0.1",
   "description": "scan text with RegExp.",
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "main": "lib/index.js",
   "scripts": {
     "build": "tsc --build src/tsconfig.json",
