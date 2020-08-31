@@ -66,11 +66,15 @@ test('scan#5', () => {
 });
 test('scan#6', () => {
   const g = scan(/\w+/g, 'abc def ghi');
-  const expected = ['abc', 'def', 'ghi'] as const;
+  const expected = [
+    {index: 0, matched: 'abc'},
+    {index: 4, matched: 'def'},
+    {index: 8, matched: 'ghi'}
+  ] as const;
   let i = 0;
   for (const {index, 0: matched} of g) {
-    expect(index).toBe(i);
-    expect(matched).toBe(expected[i]);
+    expect(index).toBe(expected[i].index);
+    expect(matched).toBe(expected[i].matched);
     ++i;
   }
   expect(g.lastIndex).toBe(11);
