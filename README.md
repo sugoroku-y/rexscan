@@ -25,17 +25,24 @@ import {scan} from 'rexscan';
 - `startIndex` : 今回の`exec`前の`lastIndex`。
 - `lastIndex` : 今回`exec`後の`lastIndex`。
 
-また、最後に成功した`exec`後の`lastIndex`(通常ループを抜けるときに失敗するので`lastIndex`はリセットされる)も取得できるようにしています。
+また、最後に実行した`exec`後の`index`(ただしループ終了後は`undefined`)、最後に成功した`exec`後の`lastIndex`(こちらはループ終了後も取得可能)も取得できるようにしています。
 
 ```ts
   let replacing = '';
   const g = scan(re, target);
-  for (const match of g) {
-    replacing += target.slice(match.prevLastIndex, match.index);
-    replacing += replaceValue(match)
+  try {
+    for (const match of g) {
+      replacing += target.slice(match.prevLastIndex, match.index);
+      replacing += replaceValue(match)
+    }
+    // g.lastIndexは最後に成功した`exec`後の`lastIndex`
+    replacing += target.slice(g.lastIndex);
+  } catch (ex) {
+    // 例外の発生した位置を示す
+    throw new Error(`${ex.toString()}:
+  ${target}
+  ${' '.repeat(g.index ?? target.length)}^`);
   }
-  // g.lastIndexは最後に成功した`exec`後の`lastIndex`
-  replacing += target.slice(g.lastIndex);
 ```
 
 ## API
@@ -61,7 +68,7 @@ import {scan} from 'rexscan';
 export function scan(
   re: RegExp,
   target: string
-): Generator<RegExpMatch, void> & {lastIndex: number} {
+): Generator<RegExpMatch, void> & {index: number | undefined; lastIndex: number} {
 ```
 
 `scan`を使った例として、Stringのメソッド二種を再実装してみました。

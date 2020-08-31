@@ -28,8 +28,9 @@ type RegExpMatch = RegExpExecArray & {
 export function scan(
   re: RegExp,
   target: string
-): Generator<RegExpMatch, void> & {lastIndex: number} {
+): Generator<RegExpMatch, void> & {index: number | undefined, lastIndex: number} {
   let lastIndex = 0;
+  let index: number | undefined;
   const g = function* () {
     if (!re.global) {
       // globalが付いていないときは1回だけで終わり
@@ -37,6 +38,7 @@ export function scan(
       if (!match) {
         return;
       }
+      index = match.index;
       lastIndex = match.index + match[0].length;
       yield Object.assign(match, {prevLastIndex: 0, startIndex: 0, lastIndex});
       return;
@@ -49,8 +51,10 @@ export function scan(
       const startIndex = re.lastIndex;
       const match = re.exec(target);
       if (!match) {
+        index = undefined;
         return;
       }
+      index = match.index;
       lastIndex = re.lastIndex;
       yield Object.assign(match, {
         prevLastIndex,
@@ -71,6 +75,11 @@ export function scan(
         lastIndex = value;
       },
     },
+    index: {
+      get() {
+        return index;
+      }
+    }
   });
 }
 

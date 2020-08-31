@@ -64,6 +64,29 @@ test('scan#5', () => {
     }))
   ).toEqual([]);
 });
+test('scan#6', () => {
+  const g = scan(/\w+/g, 'abc def ghi');
+  const expected = ['abc', 'def', 'ghi'] as const;
+  let i = 0;
+  for (const {index, 0: matched} of g) {
+    expect(index).toBe(i);
+    expect(matched).toBe(expected[i]);
+    ++i;
+  }
+  expect(g.lastIndex).toBe(11);
+  expect(g.index).toBeUndefined();
+});
+test('scan#7', () => {
+  const g = scan(/\w+/g, 'abc def ghi');
+  const expected = ['abc', 'def', 'ghi'] as const;
+  for (const {index} of g) {
+    if (index > 3) {
+      break;
+    }
+  }
+  expect(g.lastIndex).toBe(7);
+  expect(g.index).toBe(4);
+});
 test('replace#1', () => {
   const target = 'abc def ghi';
   const re = /\w+/;
