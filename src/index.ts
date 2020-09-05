@@ -1,5 +1,6 @@
-function unreachable(reason: string): never {
-  throw new Error(`unreachable: ${reason}`);
+function unreachable(): never {
+  /* istanbul ignore next */
+  throw new Error(`unreachable`);
 }
 
 type RegExpMatch = RegExpExecArray & {
@@ -64,7 +65,9 @@ export function scan(
       // 空文字列とマッチする場合、そのままだと無限ループになるので、1文字進める
       offset = match.index === re.lastIndex ? 1 : undefined;
     }
-    unreachable('re.lastIndexはtarget.lengthより大きくならない');
+    // re.lastIndexはtarget.lengthより大きくならない
+    /* istanbul ignore next */
+    unreachable();
   };
   return Object.defineProperties(g(), {
     lastIndex: {
