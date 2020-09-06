@@ -4,6 +4,9 @@ Scanning text for regular expressions.
 
 テキストを正規表現でスキャンします。
 
+[![NPM version](https://img.shields.io/npm/v/rexscan.svg?style=flat)](https://www.npmjs.com/package/rexscan)
+[![NPM monthly download](https://img.shields.io/npm/dm/rexscan.svg?style=flat)](https://www.npmjs.com/package/rexscan)
+[![NPM total download](https://img.shields.io/npm/dt/rexscan.svg?style=flat)](https://www.npmjs.com/package/rexscan)
 [![Build Status](https://travis-ci.org/sugoroku-y/rexscan.svg?branch=master)](https://travis-ci.org/sugoroku-y/rexscan)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
